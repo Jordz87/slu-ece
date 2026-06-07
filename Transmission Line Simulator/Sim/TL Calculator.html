@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="TL Calculator/lib/complex.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link rel="stylesheet" href="TL Calculator/css/TL Calculator.css">
+    <style>.icon{position:absolute;top:0;right:5%;z-index:10}.help{color:#fff;position:absolute;bottom:5%;left:2%}.help a{color:#fff;text-decoration:initial}.help a:hover{color:#000}.simicon li{border:1px solid #fff;display:inline-block;list-style:none;align-items:center}.sub li{border:1px solid #fff;display:column;list-style:none;align-items:center;background:#3b696e}.simicon li:hover{background:#d9a500}.simicon li:active{background:#F1C40F}.fa-area-chart,.fa-calculator,.fa-home,.fa-plug,.fa-spin{padding:20px;padding-bottom:15px;padding-top:15px;color:#cce5dd;font-size:24px}.fa-area-chart:hover,.fa-calculator:hover,.fa-home:hover,.fa-plug:hover,.fa-spin:hover{color:#000}.sub{display:none}.simicon :hover .sub{display:block;position:fixed;right:4%}</style>
+  <body>
+    <div class="icon">
+      <ul class="simicon">
+        <li><a href="TL Calculator.html"><i class="fa fa-calculator" aria-hidden="true"></i></a></li>
+        <li><a href="Steady State Simulator.html"><i class="fa fa-area-chart" aria-hidden="true"></i></a></li>
+        <li>
+          <a><i class="fa fa-cog fa-spin" aria-hidden="true"></i></a>
+          <div class="sub">
+            <ul>
+              <li><a href="Sine Wave.html"><i class="fa fa-plug" aria-hidden="true">&nbsp; AC</i></a></li>
+              <li><a href="Square Wave.html"><i class="fa fa-plug" aria-hidden="true">&nbsp; SQR</i></a></li>
+              <li><a href="DC Signal.html"><i class="fa fa-plug" aria-hidden="true">&nbsp; DC</i></a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="container projects">
+      <h1>Transmission Line Calculator</h1>
+      <div class="overlay"></div>
+    </div>
+    <div id="my-modaldxln" class="modaldxln">
+      <div class="modal-content">
+        <div class="modal-header" id="my-modaldxlnheader">&nbsp;</div>
+        <div class="modal-body">
+          Line Dimension & Material Constants
+          <ul></ul>
+          <label for="Tx1">Frequency, <strong>MHz</strong></label><input type="number" id="Tx1" name="Tx1" value="10">
+          <ul></ul>
+          <div class="xln">
+            <button id="inputPar2" class="inputP" style="margin-left:15%;margin-top:1%">Parallel Line</button> <button id="inputCoax2" class="inputC">Coaxial Line</button>
+            <table>
+              <tr>
+                <th>Parallel Line</th>
+                <th>Value</th>
+                <th>Unit</th>
+              </tr>
+              <tr>
+                <td>Conductor Diameter</td>
+                <td><span id="dpar"></span></td>
+                <td>mm</td>
+              </tr>
+              <tr>
+                <td>Center-To-Center Spacing</td>
+                <td><span id="Dpar"></span></td>
+                <td>mm</td>
+              </tr>
+              <tr>
+                <td>Dielectric Constant, &epsilon;r</td>
+                <td><span id="Erp"></span></td>
+              </tr>
+              <tr>
+                <td>Conductor Conductivity, &sigma;</td>
+                <td><span id="Condp"></span></td>
+                <td>&mu;S / m</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer"><button class="calc" onclick="calc()">Calculate</button></div>
+      </div>
+    </div>
+    <div id="my-modaldxxln" class="modaldxxln">
+      <div class="modal-content">
+        <div class="modal-header" id="my-modaldxxlnheader">&nbsp;</div>
+        <div class="modal-body">
+          Line Dimension & Material Constants
+          <ul></ul>
+          <label for="Tx2">Frequency, <strong>MHz</strong></label><input type="number" id="Tx2" name="Tx2" value="10">
+          <ul></ul>
+          <div class="xln">
+            <button id="inputPar" class="inputP" style="margin-left:15%;margin-top:1%">Parallel Line</button> <button id="inputCoax" class="inputC">Coaxial Line</button>
+            <table>
+              <tr>
+                <th>Coaxial Line</th>
+                <th>Value</th>
+                <th>Unit</th>
+              </tr>
+              <tr>
+                <td>Inner Conductor Diameter</td>
+                <td><span id="din"></span></td>
+                <td>mm</td>
+              </tr>
+              <tr>
+                <td>Outer Conductor Diameter</td>
+                <td><span id="dout"></span></td>
+                <td>mm</td>
+              </tr>
+              <tr>
+                <td>Dielectric Constant, &epsilon;r</td>
+                <td><span id="Erc"></span></td>
+              </tr>
+              <tr>
+                <td>Conductor Conductivity, &sigma;</td>
+                <td><span id="Condc"></span></td>
+                <td>&mu;S / m</td>
+              </tr>
+              <tr></tr>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer"><button class="calc" onclick="calc()">Calculate</button></div>
+      </div>
+    </div>
+    <div id="my-modalddln" class="modalddln">
+      <div class="modal-content">
+        <div class="modal-header" id="my-modalddlnheader">&nbsp;</div>
+        <div class="modal-body">
+          Distributed Parameters
+          <ul></ul>
+          <label for="Tx3">Frequency, <strong>MHz</strong></label><input type="number" id="Tx3" name="Tx3" value="10">
+          <ul></ul>
+          <div class="xln">
+            <button id="inputDist" class="inputD" style="margin-left:20%;margin-top:1%;width:60%;font-size:80%;letter-spacing:80%">Distributed Parameters</button>
+            <table>
+              <tr>
+                <th>Distributed Parameters</th>
+                <th>Value</th>
+                <th>Unit</th>
+              </tr>
+              <tr>
+                <td>Resistance</td>
+                <td><span id="R"></span></td>
+                <td>&Omega; / m</td>
+              </tr>
+              <tr>
+                <td>Inductance</td>
+                <td><span id="L"></span></td>
+                <td>&mu;H / m</td>
+              </tr>
+              <tr>
+                <td>Conductance</td>
+                <td><span id="G"></span></td>
+                <td>&mu;S / m</td>
+              </tr>
+              <tr>
+                <td>Capacitance</td>
+                <td><span id="C"></span></td>
+                <td>pF / m</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer"><button class="calc" onclick="calc()">Calculate</button></div>
+      </div>
+    </div>
+    <div id="my-modaldtx" class="modaldtx">
+      <div class="modal-content">
+        <div class="modal-header" id="my-modaldtxheader">&nbsp;</div>
+        <div class="modal-body">
+          Line Constants
+          <ul></ul>
+          Frequency, Mhz : <span id="Freq"></span>
+          <div class="xln">
+            <table>
+              <tr>
+                <th>Constant Parameters</th>
+                <th>Value</th>
+                <th>Unit</th>
+              </tr>
+              <tr>
+                <td>Characteristic Impedance</td>
+                <td><span id="Zo"></span></td>
+                <td>&Omega;</td>
+              </tr>
+              <tr>
+                <td>Attenuation Coefficient, &alpha;</td>
+                <td><span id="yre"></span></td>
+                <td>Nepers / m</td>
+              </tr>
+              <tr>
+                <td>Phase-shift Coefficient, &beta;</td>
+                <td><span id="yim"></span></td>
+                <td>Radians / m</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">&nbsp;</div>
+      </div>
+    </div>
+    <div id="my-modalPar" class="modalPar">
+      <div class="modal-content">
+        <div class="modal-headerg">
+          <span class="closePar">&times;</span>
+          <h2>Parallel Line</h2>
+        </div>
+        <div class="modal-body">
+          <h2>Input Parameters</h2>
+          <label for="P1">Conductor Diameter, <strong>mm</strong></label><input type="number" id="P1" name="P1" value="0">
+          <ul></ul>
+          <label for="P2">Center-To-Center Spacing, <strong>mm</strong></label><input type="number" id="P2" name="P2" value="0">
+          <ul></ul>
+          <label for="P3">Dielectric Constant, &epsilon;r</label><input type="number" id="P3" name="P3" value="0">
+          <ul></ul>
+          <label for="P4">Conductivity, &sigma; <strong>&mu;S / m</strong></label><input type="number" id="P4" name="P4" value="1e-12">
+        </div>
+        <div class="modal-footer">
+          <button class="submit" onclick="getvalueP()">Submit</button> <button class="reset" onclick="resvalueP()">Reset</button>
+          <h3>Transmission Line Calculator</h3>
+        </div>
+      </div>
+    </div>
+    <div id="my-modalCoax" class="modalCoax">
+      <div class="modal-content">
+        <div class="modal-headerg">
+          <span class="closeCoax">&times;</span>
+          <h2>Coaxial Line</h2>
+        </div>
+        <div class="modal-body">
+          <h2>Input Parameters</h2>
+          <label for="C1">Inner Conductor Diameter, <strong>mm</strong></label><input type="number" id="C1" name="C1" value="0">
+          <ul></ul>
+          <label for="C2">Outer Conductor Diameter, <strong>mm</strong></label><input type="number" id="C2" name="C2" value="0">
+          <ul></ul>
+          <label for="C3">Dielectric Constant, &epsilon;r</label><input type="number" id="C3" name="C3" value="0">
+          <ul></ul>
+          <label for="C4">Conductivity,&sigma; <strong>&mu;S / m</strong></label><input type="number" id="C4" name="C4" value="1e-12">
+        </div>
+        <div class="modal-footer">
+          <button class="submit" onclick="getvalueC()">Submit</button> <button class="reset" onclick="resvalueC()">Reset</button>
+          <h3>Transmission Line Calculator</h3>
+        </div>
+      </div>
+    </div>
+    <div id="my-modalD" class="modalD">
+      <div class="modal-content">
+        <div class="modal-headerg">
+          <span class="closeD">&times;</span>
+          <h2>Distributed Parameters</h2>
+        </div>
+        <div class="modal-body">
+          <h2>Input Parameters</h2>
+          <label for="D1">Resistance,<strong>&Omega; / m</strong></label><input type="number" id="D1" name="D1" value="0">
+          <ul></ul>
+          <label for="D2">Inductance, <strong>&mu;H / m</strong></label><input type="number" id="D2" name="D2" value="0">
+          <ul></ul>
+          <label for="D3">Conductance, <strong>&mu;S / m</strong></label><input type="number" id="D3" name="D3" value="1e-6">
+          <ul></ul>
+          <label for="D4">Capacitance, <strong>pF / m</strong></label><input type="number" id="D4" name="D4" value="1e-6">
+          <ul></ul>
+        </div>
+        <div class="modal-footer">
+          <button class="submit" onclick="getvalueD()">Submit</button> <button class="reset" onclick="resvalueD()">Reset</button>
+          <h3>Transmission Line Calculator</h3>
+        </div>
+      </div>
+    </div>
+    <div class="help"><a href="mailto:zjeferson15@gmail.com?subject=Bug Report&body=Message"><i class="fa fa-bug" aria-hidden="true"></i> Found A Bug?</a><br><a href="mailto:zjeferson15@gmail.com?subject=Feedback&body=Message"><i class="fa fa-envelope-o" aria-hidden="true"></i> Send us a Feedback</a></div>
+    <script src="TL Calculator/js/TL Calculator.js"></script>
+  </body>
+  </head>
+</html>

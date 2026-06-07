@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <script src="Steady State Simulator/lib/complex.js"></script><script src="Steady State Simulator/lib/dygraph.min.js"></script>
+      <link rel="stylesheet" href="Steady State Simulator/css/main.css">
+      <link rel="stylesheet" href="Steady State Simulator/css/graph.css">
+      <link rel="stylesheet" href="Steady State Simulator/css/checkbox.css">
+      <link rel="stylesheet" href=" https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+      <style>.icon{position:absolute;top:2%;right:5%;z-index:1}.help{color:#fff;position:absolute;bottom:5%;right:2%}.help a{color:#fff;text-decoration:initial}.help a:hover{color:#000}.simicon li{border:1px solid #fff;display:inline-block;list-style:none;align-items:center}.sub li{border:1px solid #fff;display:column;list-style:none;align-items:center}.simicon li:hover{background:#d9a500}.simicon li:active{background:#F1C40F}.fa-area-chart,.fa-calculator,.fa-home,.fa-plug,.fa-spin{padding:20px;padding-bottom:15px;padding-top:15px;color:#cce5dd;font-size:24px}.fa-area-chart:hover,.fa-calculator:hover,.fa-home:hover,.fa-plug:hover,.fa-spin:hover{color:#000}.sub{display:none}.simicon :hover .sub{display:block;position:fixed;right:4%;background:#3b696e}</style>
+   <body>
+      <div class="icon">
+         <ul class="simicon">
+            <li><a href="TL Calculator.html"><i class="fa fa-calculator" aria-hidden="true"></i></a></li>
+            <li><a href="Steady State Simulator.html"><i class="fa fa-area-chart" aria-hidden="true"></i></a></li>
+            <li>
+               <a><i class="fa fa-cog fa-spin" aria-hidden="true"></i></a>
+               <div class="sub">
+                  <ul>
+                     <li><a href="Sine Wave.html"><i class="fa fa-plug" aria-hidden="true">&nbsp; AC</i></a></li>
+                     <li><a href="Square Wave.html"><i class="fa fa-plug" aria-hidden="true">&nbsp; SQR</i></a></li>
+                     <li><a href="DC Signal.html"><i class="fa fa-plug" aria-hidden="true">&nbsp; DC</i></a></li>
+                  </ul>
+               </div>
+            </li>
+         </ul>
+      </div>
+      <div class="container projects">
+         <h1>AC Steady&nbsp;State Simulator</h1>
+         <div class="overlay"></div>
+      </div>
+      <nav>
+         <ul class="nav-links">
+            <li>
+               <a href="#"><i class="fa fa-cogs"></i>Input</a>
+               <div class="sub-menu1">
+                  <ul>
+                     <li><button id="TLpara" class="tlpara"><i class="fa fa-cogs"></i>Transmission Parameters</button></li>
+                  </ul>
+               </div>
+            </li>
+            <li>
+               <a href="#"><i class="fa fa-list-ol"></i> Data</a>
+               <div class="sub-menu1">
+                  <ul>
+                     <li><button id="Data" class="dataa"><i class="fa fa-list-ol"></i> Summary</button></li>
+                  </ul>
+               </div>
+            </li>
+            <li>
+               <a href="#"><i class="fa fa-line-chart"></i> Graph</a>
+               <div class="sub-menu3">
+                  <ul>
+                     <li><button id="Graph" class="graph"><i class="fa fa-line-chart"></i> Graph</button></li>
+                  </ul>
+               </div>
+            </li>
+         </ul>
+      </nav>
+   </body>
+   <div id="my-modalTx" class="modalTx">
+      <div class="modal-content">
+         <div class="modal-header">
+            <span class="closeTx">&times;</span>
+            <h2>Transmission Parameters</h2>
+         </div>
+         <div class="modal-body">
+            <h2>SOURCE</h2>
+			<label for="frq">Frequency, <strong>MHz</strong></label><input type="number" id="frq" name="frq" value="10"><label for="Eg">Generator Voltage, Eg &#8736; &theta; <sub>rad</sub></label>
+            <div class="cln">&emsp;&emsp;&emsp;<input type="number" id="Ega" name="Ega" value="50"> &#8736; <input type="number" id="Egb" name="Egb" value="0"><strong>Volts</strong></div>
+			<label for="Zg">Generator Impedance, Zg</label>
+            <div class="cln">R <input type="number" id="Zga" name="Zga" value="75">+ jX <input type="number" id="Zgb" name="Zgb" value="0"> <strong>&Omega;</strong></div>
+			<h2>LINE CONSTANT</h2>
+			 <label for="Zo">Characteristic Impedance, Zo</label>
+            <div class="cln">R <input type="number" id="Zoa" name="Zoa" value="75">+ jX <input type="number" id="Zob" name="Zob" value="0"> <strong>&Omega;</strong></div>
+            <label for="length">Length of the Line</label>
+            <ul>&emsp;&emsp;&emsp;&ensp;&nbsp; <input type="number" id="length" name="length" value="100"><strong>Meters</strong></ul>
+            <label for="alpha">Attenuation Constant, &alpha;</label>
+            <ul>&emsp;&emsp;&emsp;&ensp;&emsp;&emsp;&emsp;&emsp;<input type="number" id="alpha" name="alpha" value="0"> <strong>Nepers/meter</strong></ul>
+            <h2>LOAD</h2>
+			<label for="Zl">Load Impedance, Zl</label>
+            <div class="cln">R <input type="number" id="Zla" name="Zla" value="50">+ jX <input type="number" id="Zlb" name="Zlb" value="0"> <strong>&Omega;</strong></div>
+         </div>
+         <div class="modal-footer"><button class="submit" onclick="calc()">Submit</button> <button class="reset" onclick="resvalueTx()">Reset</button></div>
+      </div>
+   </div>
+   <div id="my-modaldxln" class="modaldxln">
+      <div class="modal-contenta">
+         <div class="modal-headerd" id="my-modaldxlnheader">
+            <span class="closedxln">&times;</span>
+            <h2>Overview</h2>
+         </div>
+         <div class="modal-bodya">
+            Frequency, MHz : <span id = "cl"></span>
+            <ul></ul>
+            <div class = "xln">
+               <table>
+                  <tr>
+                     <th>Reflection Coefficient</th>
+                     <th>Value</th>
+                     <th>Unit</th>
+                  </tr>
+                  <tr>
+                     <td>&Tau;<sub>Source</sub></td>
+                     <td><span id = "tau_s"></span></td>
+                     <td></td>
+                  </tr>
+                  <tr>
+                     <td>&Tau;<sub>Load</sub></td>
+                     <td><span id = "tau_r"></span></td>
+                     <td></td>
+                  </tr>
+                  <tr>
+                     <th>Voltage</th>
+                     <th>Value</th>
+                     <th>Unit</th>
+                  </tr>
+                  <tr>
+                     <td>Voltage<sub> x = 0</span></sub></td>
+                     <td><span id = "Etx"></span></td>
+                     <td>Volts</td>
+                  </tr>
+                  <tr>
+                     <td>Voltage<sub> x = <span id = "load1"></span></sub></td>
+                     <td><span id = "Erx"></span></td>
+                     <td>Volts</td>
+                  </tr>
+                  <tr>
+                     <th>Current</th>
+                     <th>Value</th>
+                     <th>Unit</th>
+                  </tr>
+                  <tr>
+                     <td>Current<sub> x = 0</span></sub></td>
+                     <td><span id = "Itx"></span></td>
+                     <td>Amperes</td>
+                  </tr>
+                  <tr>
+                     <td>Current<sub> x = <span id = "load2"></span></sub></td>
+                     <td><span id = "Irx"></span></td>
+                     <td>Amperes</td>
+                  </tr>
+                  <tr>
+                     <th>Impedance</th>
+                     <th>Value</th>
+                     <th>Unit</th>
+                  </tr>
+                  <tr>
+                     <td>Impedance<sub> x = 0</span></sub></td>
+                     <td><span id = "Ztx"></span></td>
+                     <td>&Omega;</td>
+                  </tr>
+                  <tr>
+                     <td>Impedance<sub> x = <span id = "load3"></span></sub></td>
+                     <td><span id = "Zrx"></span></td>
+                     <td>&Omega;</td>
+                  </tr>
+                  <tr>
+                     <th>Constants</th>
+                     <th>Value</th>
+                     <th>Unit</th>
+                  </tr>
+                  <tr>
+                     <td>Peopagation Constant, &gamma;</td>
+                     <td><span id = "g"></span></td>
+                     <td></td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+         <div class="modal-footera"></div>
+      </div>
+   </div>
+   <div id="my-modalg" class="modalgraph">
+      <div class="modal-contentg">
+         <div class="modal-headercheck" id="my-modalgheader"><span class="closegraph">&times;</span>&nbsp;</div>
+         <div class="modal-body-graph">
+            <div class = "checkbox">
+               <div class = "check1">
+                  <div id="check1">
+                     <h3>Magnitude</h3>
+                     <label for = "vmag" class="container">Voltage<input type="checkbox" id ="vmag" name="vmag"><span class="checkmark"></span></label><br><label for = "imag" class="container">Current<input type="checkbox" id ="imag" name="imag"><span class="checkmark"></span></label><br><label for = "zmag" class="container">Impedance<input type="checkbox" id ="zmag" name="zmag"><span class="checkmark"></span></label><br>
+                  </div>
+                  <div id="check2">
+                     <h3>Phase Shift</h3>
+                     <label for = "vang" class="container">Voltage<input type="checkbox" id ="vang" name="vang"><span class="checkmark"></span></label><br><label for = "iang" class="container">Current<input type="checkbox" id ="iang" name="iang"><span class="checkmark"></span></label><br><label for = "zang" class="container">Impedance<input type="checkbox" id ="zang" name="zang"><span class="checkmark"></span></label>
+                  </div>
+               </div>
+               <div id="check3">
+                  <h3>Impedance (Rectangular)</h3>
+                  <label for = "zre" class="container">Real<input type="checkbox" id ="zre" name="zre"><span class="checkmark"></span></label><br><label for = "zimg" class="container">Imaginary<input type="checkbox" id ="zimg" name="zimg"><span class="checkmark"></span></label>
+               </div>
+               <br>
+               <p style = "color: #f5f542; font-weight: bold; font-size: 80%;" > UNCHECK : MAGNITUDE & PHASE-SHIFT </p>
+            </div>
+         </div>
+         <div class="modal-footerg"><button class = "ok" onclick="simulate();"> Plot </button><button class = "cancel" onclick="clc();">Clear</button></div>
+      </div>
+   </div>
+   </div>
+   <div class = "help"><a href = "mailto:zjeferson15@gmail.com?subject=Bug Report&body=Message"><i class="fa fa-bug" aria-hidden="true"></i> Found A Bug?</a><br><a href = "mailto:zjeferson15@gmail.com?subject=Feedback&body=Message"><i class="fa fa-envelope-o" aria-hidden="true"></i> Send us a Feedback</a></div>
+   <div id = "graph" class"graph">
+      <div id="graph1" class="graph1"></div>
+      <div id="graph2" class="graph2"></div>
+   </div>
+   <script src="Steady State Simulator/js/main.js"></script><script src="Steady State Simulator/js/checkbox.js"></script><script src="Steady State Simulator/js/graph.js"></script></body>
+</html>
