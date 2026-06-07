@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimuLab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #080a0f;
+      font-family: 'Syne', sans-serif;
+      overflow: hidden;
+    }
+
+    /* subtle grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .wordmark {
+      position: fixed;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .center {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      animation: fadeDown 0.7s ease both;
+    }
+
+    .subtitle {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 3.5rem;
+      animation: fadeDown 0.7s 0.1s ease both;
+    }
+
+    .cards {
+      display: flex;
+      gap: 1.5rem;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .card {
+      position: relative;
+      width: 280px;
+      padding: 2.5rem 2rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card.tl { --accent: #00d4aa; --glow: rgba(0, 212, 170, 0.12); }
+    .card.cam { --accent: #ff6b35; --glow: rgba(255, 107, 53, 0.12); }
+
+    .card.tl::before { background: radial-gradient(circle at 50% 0%, rgba(0,212,170,0.15), transparent 70%); }
+    .card.cam::before { background: radial-gradient(circle at 50% 0%, rgba(255,107,53,0.15), transparent 70%); }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      background: var(--glow);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .icon-wrap {
+      width: 64px; height: 64px;
+      border-radius: 16px;
+      border: 1.5px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover .icon-wrap {
+      box-shadow: 0 0 24px var(--glow);
+    }
+
+    .card-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.01em;
+      text-align: center;
+    }
+
+    .card-desc {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .open-btn {
+      margin-top: 0.5rem;
+      padding: 0.55rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: transparent;
+      transition: background 0.2s, color 0.2s;
+      pointer-events: none;
+    }
+
+    .card:hover .open-btn {
+      background: var(--accent);
+      color: #080a0f;
+    }
+
+    /* animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* mobile */
+    @media (max-width: 640px) {
+      .cards { flex-direction: column; }
+      .card { width: 100%; max-width: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wordmark">SimuLab · ECE Simulator Suite</div>
+
+<div class="center">
+  <h1>Choose a Simulator</h1>
+  <p class="subtitle">Select one to begin</p>
+
+  <div class="cards">
+
+    <a class="card tl" href="Transmission Line Simulator/Transmisssion Line Simulator/Homepage.html">
+      <div class="icon-wrap">📡</div>
+      <div class="card-name">Transmission Line<br>Simulator</div>
+      <div class="card-desc">TL Calculator · Steady State<br>Transient State</div>
+      <div class="open-btn">Open →</div>
+    </a>
+
+    <a class="card cam" href="CaMTeS/Simulator/mainFlexPage.html">
+      <div class="icon-wrap">🔢</div>
+      <div class="card-name">CaMTeS</div>
+      <div class="card-desc">Coding · PCM · Line Encoding<br>Digital Modulation</div>
+      <div class="open-btn">Open →</div>
+    </a>
+
+  </div>
+</div>
+
+</body>
+</html>
