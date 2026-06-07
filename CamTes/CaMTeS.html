@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="Simulator/BROWSER/ABOUT PAGE/AboutPage.css">
+        <title>About Page</title>
+        <script src="Simulator/BROWSER/menu/button.js"></script>
+        <link rel="shortcut icon" type="x-icon" href="Simulator/BROWSER/menu/CaMTS.png">
+        <img src="Simulator/BROWSER/Adaptive Delta PCM/loading/Main Logo CaMTS Logo.gif" class="camtes">
+        <script src="Simulator/BROWSER/Libs/Main Libs/jquery-3.6.0.min.js"></script>
+        <script>
+               $(".camtes").css("display", "flex" );
+             $(document).ready(function(){
+               $(".camtes").delay(1000); // simulate loading time
+                         $(".camtes").fadeOut();
+             });
+           </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="top">
+                <img src="Simulator/BROWSER/ABOUT PAGE/images/logo.gif">
+                <div class="descript">
+                    <h2 id="acroynmTitle">CaMTeS</h2>
+                    <h2  id="acroynmTitle2"> Coding and Modulation Techniques Simulator</h2>
+                    <p id="contTop">This simulator is a collective simulator of coding and modulation techniques that are used in digital communications. This aims to aid in understanding the concepts and processes by providing visualization of how digital information is derived from characters or signals, how digital information is superimposed in pulse signals and analog carriers for transmission, and how the digital information is detected from the received pulses and modulated carriers. The simulator is comprehensible as it indicated all the Four Simulators for Coding and Modulation technique at the user’s screen.</p>
+                </div>
+				<div class="simIcons">
+					<img src="Simulator/BROWSER/ABOUT PAGE/images/Character Coding Transparent.gif">
+					<img src="Simulator/BROWSER/ABOUT PAGE/images/PCM Transparent.gif">
+					<img src="Simulator/BROWSER/ABOUT PAGE/images/Line Coding transparent.gif">
+					<img src="Simulator/BROWSER/ABOUT PAGE/images/Digital-Modulation Transparent.gif">
+				</div>
+			</div>
+		</div>
+		<a class="simBut" href="Simulator/mainFlexPage.html">
+			SIMULATE
+		</a>
+    </body>
+</html>
